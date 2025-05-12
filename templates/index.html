@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Dataset</title>
+    <!-- Link to external CSS file -->
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Project Heading with Quotes -->
+        <h1 class="text-center my-4">
+            <span class="quotes">"</span> Advanced EDA for Genomic Data Analysis <span class="quotes">"</span>
+        </h1>
+
+        <h2 class="text-center mb-4">Upload Your Dataset</h2>
+
+        <!-- Flash Messages for Error or Success -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alerts">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} mt-4" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form action="/process" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="fileInput">Choose Dataset File</label>
+                <input type="file" name="file" class="form-control-file" id="fileInput" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Process Dataset</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
