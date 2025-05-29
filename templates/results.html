@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PCA Results</title>
-    <!-- Link to external CSS file -->
+    <title>PCA & EDA Results</title>
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <!-- Project Heading with Quotes -->
+        <!-- Project Heading -->
         <h1 class="text-center my-4">
             <span class="quotes">"</span> Advanced EDA for Genomic Data Analysis <span class="quotes">"</span>
         </h1>
 
-        <h2 class="text-center mb-4">PCA Results</h2>
+        <h2 class="text-center mb-4">PCA & EDA Results</h2>
 
-        <!-- Flash Messages for Error or Success -->
+        <!-- Flash messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 <div class="alerts">
@@ -30,30 +29,57 @@
             {% endif %}
         {% endwith %}
 
-        <h2>Scatter Plot</h2>
-        <div class="text-center">
-            <img src="{{ plot_url }}" alt="PCA Scatter Plot" class="img-fluid">
+        <!-- PCA Scatter Plot -->
+        <h3>Scatter Plot of Principal Components</h3>
+        <div class="text-center mb-4">
+            <img src="{{ plot_url }}" alt="PCA Scatter Plot" class="img-fluid rounded shadow-sm">
         </div>
 
-        <h2>Principal Components Table</h2>
-        <div class="table-responsive">
-            {{ pca_table | safe }}
+        <!-- Correlation Heatmap -->
+        <h3>Correlation Heatmap</h3>
+        <div class="text-center mb-4">
+            <img src="{{ heatmap_url }}" alt="Correlation Heatmap" class="img-fluid rounded shadow-sm">
         </div>
 
-        <h2>Numeric Columns Used for Analysis</h2>
+        <!-- Toggle Button for Principal Components Table -->
+        <h3>Principal Components Table</h3>
+        <p>
+            <a class="btn btn-info mb-3" data-toggle="collapse" href="#pcaTable" role="button" aria-expanded="false" aria-controls="pcaTable">
+                Show/Hide Principal Components Table
+            </a>
+        </p>
+        <div class="collapse" id="pcaTable">
+            <div class="card card-body">
+                <div class="table-responsive">
+                    {{ pca_table | safe }}
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Numeric Columns Used -->
+        <h3>Numeric Columns Used</h3>
         <ul>
             {% for column in numeric_columns %}
-            <li>{{ column }}</li>
+                <li>{{ column }}</li>
             {% endfor %}
         </ul>
 
-        <h2>Download Processed Dataset</h2>
-        <a href="{{ processed_file_url }}" download class="btn btn-custom">Download Processed Dataset</a>
+        <!-- Summary Statistics -->
+        <h3>Summary Statistics of Numeric Features</h3>
+        <div class="table-responsive mb-4">
+            {{ summary_table | safe }}
+        </div>
 
-        <br><br>
-        <a href="/" class="btn btn-secondary">Upload Another Dataset</a>
+        <!-- Download button -->
+        <h3>Download Processed Dataset</h3>
+        <a href="{{ processed_file_url }}" download class="btn btn-success btn-block">Download Processed Dataset</a>
+
+        <!-- Back to Home -->
+        <a href="/" class="btn btn-secondary mt-4">Upload Another Dataset</a>
     </div>
 
+    <!-- Bootstrap Scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
